@@ -3,39 +3,80 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Setup" Height="400" Width="600">
     <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <ListView x:Name="LvTests">
+        <!-- Thanh trên: Search bên trái, Add bên phải -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Search bên trái -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="Search"
+                       VerticalAlignment="Center"
+                       Margin="0,0,5,0"/>
+                <TextBox x:Name="TxtSearch"
+                         Width="200"
+                         VerticalAlignment="Center"
+                         TextChanged="TxtSearch_TextChanged"/>
+            </StackPanel>
+
+            <!-- Nút Add bên phải -->
+            <Button x:Name="BtnAdd"
+                    Grid.Column="1"
+                    Content="Add"
+                    Width="80"
+                    Padding="10,3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Click="BtnAdd_Click"/>
+        </Grid>
+
+        <!-- ListView -->
+        <ListView x:Name="LvTests"
+                  Grid.Row="1"
+                  Margin="0,5,0,0">
             <ListView.View>
                 <GridView>
-                    <!-- Test name -->
-                    <GridViewColumn Header="Test Name" Width="220"
+                    <!-- Cột Test Name -->
+                    <GridViewColumn Header="Test Name"
+                                    Width="250"
                                     DisplayMemberBinding="{Binding TestName}" />
 
-                    <!-- Created time -->
-                    <GridViewColumn Header="Created Time" Width="180"
-                                    DisplayMemberBinding="{Binding CreatedTimeFormatted}" />
-
-                    <!-- Cột cuối chứa nút -->
-                    <GridViewColumn Width="140">
+                    <!-- Cột Created Time, format dd/MM/yyyy HH:mm:ss -->
+                    <GridViewColumn Header="Created Time" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Edit"
-                                            Width="50"
-                                            Margin="0 0 10 0"
-                                            Click="BtnEdit_Click"/>
+                                <TextBlock Text="{Binding CreatedTime,
+                                                          StringFormat=dd/MM/yyyy HH:mm:ss}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
+                    <!-- Cột nút (không header) -->
+                    <GridViewColumn Width="130">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center">
+                                    <Button Content="Edit"
+                                            Margin="0,0,5,0"
+                                            Padding="5,2"
+                                            Click="BtnEdit_Click"/>
                                     <Button Content="Delete"
-                                            Width="60"
+                                            Padding="5,2"
                                             Click="BtnDelete_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
                 </GridView>
             </ListView.View>
         </ListView>
-
     </Grid>
 </Window>
