@@ -49,13 +49,10 @@
                                     DisplayMemberBinding="{Binding TestName}" />
 
                     <!-- Cột Created Time, format dd/MM/yyyy HH:mm:ss -->
-                    <GridViewColumn Header="Created Time" Width="200">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CreatedTime,
-                                                          StringFormat=dd/MM/yyyy HH:mm:ss}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
+                    <GridViewColumn Header="Created Time" Width="170">
+                        <GridViewColumn.DisplayMemberBinding>
+                            <Binding Path="CreatedTime" StringFormat="dd/MM/yyyy HH:mm:ss"/>
+                        </GridViewColumn.DisplayMemberBinding>
                     </GridViewColumn>
 
                     <!-- Cột nút (không header) -->
@@ -65,7 +62,7 @@
                                 <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center">
                                     <Button Content="Edit"
-                                            Margin="0,0,5,0"
+                                            Margin="0,0,20,0"
                                             Padding="5,2"
                                             Click="BtnEdit_Click"/>
                                     <Button Content="Delete"

@@ -71,24 +71,36 @@ namespace DMR2020.View
         // Nút Add (bạn có thể thay bằng mở window tạo test mới)
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Items.Add(new TestItem
+            var win = new EditTestWindow();
+            win.Owner = this;
+            win.Title = "Add Test Item";
+
+            if (win.ShowDialog() == true)
             {
-                TestName = "New Test",
-                CreatedTime = DateTime.Now
-            });
+                Items.Add(new TestItem
+                {
+                    TestName = win.TestName,
+                    CreatedTime = DateTime.Now   // <-- đúng kiểu DateTime
+                });
+            }
         }
 
         // Nút Edit
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is TestItem item)
-            {
-                MessageBox.Show($"Edit: {item.TestName}",
-                    "Edit",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
+            var item = (sender as FrameworkElement)?.DataContext as TestItem;
+            if (item == null) return;
 
-                // TODO: mở Setup chi tiết để sửa item
+            var win = new EditTestWindow();
+            win.Title = "Edit Test Item";
+            win.Owner = this;
+
+            // nạp dữ liệu cũ
+            win.TestName = item.TestName;
+
+            if (win.ShowDialog() == true)
+            {
+                item.TestName = win.TestName;
             }
         }
 
