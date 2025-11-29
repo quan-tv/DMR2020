@@ -60,11 +60,20 @@
                            VerticalAlignment="Center" />
                 <TextBox x:Name="TxtTestTime"
                          Grid.Row="0" Grid.Column="1"
-                         Width="60"
-                         Margin="8,0,4,4"/>
-                <TextBlock Grid.Row="0" Grid.Column="2"
+                         Background="WhiteSmoke"
+                         Margin="26,0,39,3"/>
+                <TextBlock Grid.Column="1"
                            Text="min."
-                           VerticalAlignment="Center" />
+                           VerticalAlignment="Center" Height="14" Margin="138,0,6,0" RenderTransformOrigin="0.5,0.5" >
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
 
                 <!-- Torque Unit -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
@@ -73,10 +82,11 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboTorqueUnit"
                           Grid.Row="1" Grid.Column="1"
-                          Margin="8,4,4,4"
-                          Width="90">
+                          Margin="26,4,6,6">
                     <ComboBoxItem Content="lb-in"/>
-                    <ComboBoxItem Content="kg-cm"/>
+                    <ComboBoxItem Content="Kg-cm"/>
+                    <ComboBoxItem Content="dN-m"/>
+                    <ComboBoxItem Content="N-m"/>
                 </ComboBox>
 
                 <!-- Time Unit -->
@@ -86,10 +96,9 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboTimeUnit"
                           Grid.Row="2" Grid.Column="1"
-                          Margin="8,4,4,0"
-                          Width="90">
+                          Margin="26,4,6,5">
                     <ComboBoxItem Content="mm:ss"/>
-                    <ComboBoxItem Content="sec"/>
+                    <ComboBoxItem Content="mm."/>
                 </ComboBox>
             </Grid>
         </GroupBox>
@@ -122,6 +131,9 @@
                           Margin="8,0,0,4">
                     <ComboBoxItem Content="ts"/>
                     <ComboBoxItem Content="tc"/>
+                    <ComboBoxItem Content="Tc"/>
+                    <ComboBoxItem Content="T"/>
+                    <ComboBoxItem Content="t"/>
                 </ComboBox>
                 <TextBox x:Name="TxtResult1"
                          Grid.Row="0" Grid.Column="1"
@@ -138,6 +150,9 @@
                           Margin="8,0,120,4">
                     <ComboBoxItem Content="ts"/>
                     <ComboBoxItem Content="tc"/>
+                    <ComboBoxItem Content="Tc"/>
+                    <ComboBoxItem Content="T"/>
+                    <ComboBoxItem Content="t"/>
                 </ComboBox>
                 <TextBox x:Name="TxtResult2"
                          Grid.Row="1" Grid.Column="1"
@@ -154,6 +169,9 @@
                           Margin="8,0,4,4">
                     <ComboBoxItem Content="ts"/>
                     <ComboBoxItem Content="tc"/>
+                    <ComboBoxItem Content="Tc"/>
+                    <ComboBoxItem Content="T"/>
+                    <ComboBoxItem Content="t"/>
                 </ComboBox>
                 <TextBox x:Name="TxtResult3"
                          Grid.Row="2" Grid.Column="1"
@@ -170,6 +188,9 @@
                           Margin="8,0,0,4">
                     <ComboBoxItem Content="ts"/>
                     <ComboBoxItem Content="tc"/>
+                    <ComboBoxItem Content="Tc"/>
+                    <ComboBoxItem Content="T"/>
+                    <ComboBoxItem Content="t"/>
                 </ComboBox>
                 <TextBox x:Name="TxtResult4"
                         Grid.Row="3" Grid.Column="1"
@@ -204,31 +225,41 @@
                     <TextBlock Grid.Row="0" Grid.Column="2"
                                Text="°C"
                                VerticalAlignment="Center"/>
-
-                    <!-- Arc -->
-                    <TextBlock Grid.Row="1" Grid.Column="0"
-                               Text="Arc."
-                               Margin="0,4,0,0"
-                               VerticalAlignment="Center"/>
-                    <ComboBox x:Name="CboArc"
-                              Grid.Row="1" Grid.Column="1"
-                              Margin="8,4,4,0"
-                              Width="60">
-                        <ComboBoxItem Content="1"/>
-                        <ComboBoxItem Content="2"/>
-                        <ComboBoxItem Content="3"/>
-                    </ComboBox>
                 </Grid>
             </GroupBox>
+            <!-- ====== ARC + TAN DELTA (CÙNG 1 HÀNG) ====== -->
+            <Grid Grid.Row="2" Grid.Column="0"
+      Margin="0,0,8,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <!-- Tan Delta checkbox -->
-            <CheckBox x:Name="ChkTanDelta"
-                      Content="Tan Delta"
-                      IsChecked="True"
-                      Margin="0,0,0,0"
-                      Padding="8,4"
-                      HorizontalAlignment="Left"
-                      Background="#FFE88C8C"/>
+                <!-- Arc -->
+                <TextBlock Text="Arc."
+               VerticalAlignment="Center"/>
+                <ComboBox x:Name="CboArc"
+              Grid.Column="1"
+              Margin="8,0,90,0" Grid.ColumnSpan="2">
+                    <ComboBoxItem Content="0.5"/>
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="5"/>
+                </ComboBox>
+
+                <!-- Tan Delta -->
+                <TextBlock Text="Tan Delta"
+               Grid.Column="2"
+               VerticalAlignment="Center"
+               Margin="40,0,8,0"/>
+                <CheckBox x:Name="ChkTanDelta"
+              Grid.Column="3"
+              IsChecked="True"
+              VerticalAlignment="Center" Height="16" Margin="4,0,0,0"/>
+            </Grid>
+
         </StackPanel>
 
         <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
