@@ -40,7 +40,7 @@
 
             </Menu.Resources>
 
-            <MenuItem Header="Setup"       Style="{StaticResource TopMenuItemStyle}"/>
+            <MenuItem Header="Setup" Style="{StaticResource TopMenuItemStyle}" Click="SetupMenuItem_Click"/>
             <MenuItem Header="Report"      Style="{StaticResource TopMenuItemStyle}"/>
             <MenuItem Header="Delete"      Style="{StaticResource TopMenuItemStyle}"/>
             <MenuItem Header="Calibration" Style="{StaticResource TopMenuItemStyle}"/>
