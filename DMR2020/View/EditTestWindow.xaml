@@ -82,7 +82,8 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboTorqueUnit"
                           Grid.Row="1" Grid.Column="1"
-                          Margin="26,4,6,6">
+                          Margin="26,4,6,6"
+                          SelectedIndex="0">
                     <ComboBoxItem Content="lb-in"/>
                     <ComboBoxItem Content="Kg-cm"/>
                     <ComboBoxItem Content="dN-m"/>
@@ -96,6 +97,7 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboTimeUnit"
                           Grid.Row="2" Grid.Column="1"
+                          SelectedIndex="0"
                           Margin="26,4,6,5">
                     <ComboBoxItem Content="mm:ss"/>
                     <ComboBoxItem Content="mm."/>
@@ -126,6 +128,7 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboResult1"
                           Grid.Row="0" Grid.Column="1"
+                          SelectedIndex="0"
                           Width="50"
                           HorizontalAlignment="Left"
                           Margin="8,0,0,4">
@@ -137,6 +140,7 @@
                 </ComboBox>
                 <TextBox x:Name="TxtResult1"
                          Grid.Row="0" Grid.Column="1"
+                         Background="WhiteSmoke"
                          Margin="70,0,0,4" Grid.ColumnSpan="2"/>
 
                 <!-- Result 2 -->
@@ -145,6 +149,7 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboResult2"
                           Grid.Row="1" Grid.Column="1"
+                          SelectedIndex="0"
                           Width="50"
                           HorizontalAlignment="Left"
                           Margin="8,0,120,4">
@@ -156,6 +161,7 @@
                 </ComboBox>
                 <TextBox x:Name="TxtResult2"
                          Grid.Row="1" Grid.Column="1"
+                         Background="WhiteSmoke"
                          Margin="70,0,0,4" Grid.ColumnSpan="2"/>
 
                 <!-- Result 3 -->
@@ -164,6 +170,7 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboResult3"
                           Grid.Row="2" Grid.Column="1"
+                          SelectedIndex="0"
                           Width="50"
                           HorizontalAlignment="Left"
                           Margin="8,0,4,4">
@@ -175,6 +182,7 @@
                 </ComboBox>
                 <TextBox x:Name="TxtResult3"
                          Grid.Row="2" Grid.Column="1"
+                         Background="WhiteSmoke"
                          Margin="70,0,0,4" Grid.ColumnSpan="2"/>
 
                 <!-- Result 4 -->
@@ -183,6 +191,7 @@
                            VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboResult4"
                           Grid.Row="3" Grid.Column="1"
+                          SelectedIndex="0"
                           Width="50"
                           HorizontalAlignment="Left"
                           Margin="8,0,0,4">
@@ -194,6 +203,7 @@
                 </ComboBox>
                 <TextBox x:Name="TxtResult4"
                         Grid.Row="3" Grid.Column="1"
+                         Background="WhiteSmoke"
                         Margin="70,0,0,4" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
@@ -206,11 +216,10 @@
                 <Grid Margin="8">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
@@ -220,16 +229,17 @@
                                VerticalAlignment="Center"/>
                     <TextBox x:Name="TxtTestTemp"
                              Grid.Row="0" Grid.Column="1"
+                             Background="WhiteSmoke"
                              Width="60"
                              Margin="8,0,4,4"/>
                     <TextBlock Grid.Row="0" Grid.Column="2"
+                               HorizontalAlignment="Left"
                                Text="°C"
                                VerticalAlignment="Center"/>
                 </Grid>
             </GroupBox>
             <!-- ====== ARC + TAN DELTA (CÙNG 1 HÀNG) ====== -->
-            <Grid Grid.Row="2" Grid.Column="0"
-      Margin="0,0,8,8">
+            <Grid Grid.Row="1" Margin="0,0,8,8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="80"/>
@@ -241,8 +251,9 @@
                 <TextBlock Text="Arc."
                VerticalAlignment="Center"/>
                 <ComboBox x:Name="CboArc"
-              Grid.Column="1"
-              Margin="8,0,90,0" Grid.ColumnSpan="2">
+                          SelectedIndex="0"
+                          Grid.Column="1"
+                          Margin="8,0,90,0" Grid.ColumnSpan="2">
                     <ComboBoxItem Content="0.5"/>
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="3"/>
@@ -259,7 +270,6 @@
               IsChecked="True"
               VerticalAlignment="Center" Height="16" Margin="4,0,0,0"/>
             </Grid>
-
         </StackPanel>
 
         <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
@@ -294,10 +304,16 @@
                            VerticalAlignment="Center"
                            Margin="0,0,8,0"/>
                 <ComboBox x:Name="CboTorqueRange"
-                          Width="70">
-                    <ComboBoxItem Content="1"/>
+                          Width="70"
+                          Margin="0 0 11 0"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Auto"/>
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="25"/>
+                    <ComboBoxItem Content="50"/>
+                    <ComboBoxItem Content="100"/>
+                    <ComboBoxItem Content="200"/>
                 </ComboBox>
             </StackPanel>
         </Grid>
@@ -312,14 +328,12 @@
                     Width="100"
                     Margin="0,0,40,0"
                     Padding="10,4"
-                    Click="BtnSave_Click"
-                    Background="#FFFFC0C0"/>
+                    Click="BtnSave_Click"/>
             <Button x:Name="BtnExit"
                     Content="Exit"
                     Width="100"
                     Padding="10,4"
-                    Click="BtnExit_Click"
-                    Background="#FFB0F0F0"/>
+                    Click="BtnExit_Click"/>
         </StackPanel>
     </Grid>
 </Window>
