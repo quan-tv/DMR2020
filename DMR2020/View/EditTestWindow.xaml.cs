@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace DMR2020.View
 {
@@ -14,6 +16,41 @@ namespace DMR2020.View
             TxtTestName.Focus();
 
             LoadSpecTable();
+
+            DgSpec.Loaded += (s, e) => LockScrollViewer();
+        }
+
+        private ScrollViewer _specScrollViewer;
+
+        private void LockScrollViewer()
+        {
+            _specScrollViewer = FindVisualChild<ScrollViewer>(DgSpec);
+
+            if (_specScrollViewer != null)
+            {
+                // Khóa scroll
+                _specScrollViewer.ScrollChanged += (s, e) =>
+                {
+                    _specScrollViewer.ScrollToVerticalOffset(0);
+                    e.Handled = true;
+                };
+            }
+        }
+
+        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is T tChild)
+                    return tChild;
+
+                var result = FindVisualChild<T>(child);
+                if (result != null)
+                    return result;
+            }
+            return null;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -62,6 +99,11 @@ namespace DMR2020.View
             double totalHeight = headerHeight + (dg.RowHeight * rowCount) + 2;
 
             dg.Height = totalHeight;
+        }
+        private void DgSpec_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            // Chặn không cho DataGrid xử lý wheel => không scroll
+            e.Handled = true;
         }
     }
 

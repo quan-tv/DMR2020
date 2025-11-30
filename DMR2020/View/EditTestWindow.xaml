@@ -304,6 +304,7 @@
                   Height="175"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  PreviewMouseWheel="DgSpec_PreviewMouseWheel"
                   Margin="4">
 
                     <!-- ⚠⚠ Ở ĐÂY LÀ DataGrid.Columns – NẰM TRỰC TIẾP BÊN TRONG DataGrid ⚠⚠ -->
