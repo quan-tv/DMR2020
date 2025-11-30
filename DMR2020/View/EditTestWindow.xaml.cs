@@ -171,6 +171,9 @@ namespace DMR2020.View
 
         private void SaveTestSetup()
         {
+            DgSpec.CommitEdit(DataGridEditingUnit.Cell, true);
+            DgSpec.CommitEdit(DataGridEditingUnit.Row, true);
+
             // ===== 1. BASIC =====
             _testSetup.TestName = TxtTestName.Text?.Trim();
 
@@ -210,6 +213,12 @@ namespace DMR2020.View
                 {
                     switch (row.Spec)
                     {
+                        case "ML":
+                            _testSetup.MlMinValue = row.Min;
+                            _testSetup.MlMaxValue = row.Max;
+                            _testSetup.MlChecked = row.IsChecked;
+                            break;
+
                         case "MH":
                             _testSetup.MhMinValue = row.Min;
                             _testSetup.MhMaxValue = row.Max;

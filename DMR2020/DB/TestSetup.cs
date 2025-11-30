@@ -49,6 +49,14 @@ namespace DMR2020.Data
 
         [SugarColumn(ColumnName = "result_4_value")]
         public string Result4Value { get; set; }
+        [SugarColumn(ColumnName = "ml_min_value")]
+        public int? MlMinValue { get; set; }
+
+        [SugarColumn(ColumnName = "ml_max_value")]
+        public int? MlMaxValue { get; set; }
+
+        [SugarColumn(ColumnName = "ml_checked")]
+        public bool MlChecked { get; set; }
 
         [SugarColumn(ColumnName = "mh_min_value")]
         public int? MhMinValue { get; set; }
