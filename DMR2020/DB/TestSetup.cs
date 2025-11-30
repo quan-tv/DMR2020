@@ -20,8 +20,11 @@ namespace DMR2020.Data
         [SugarColumn(ColumnName = "time_unit")]
         public string TimeUnit { get; set; }
 
+        [SugarColumn(ColumnName = "test_temp")]
+        public double? TestTemp { get; set; }
+
         [SugarColumn(ColumnName = "arc")]
-        public int? Arc { get; set; }
+        public double? Arc { get; set; }
 
         [SugarColumn(ColumnName = "tan_delta_checked")]
         public bool TanDeltaChecked { get; set; }

@@ -1,12 +1,13 @@
 ﻿using DMR2020.Data;
 using SqlSugar;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Collections.Generic;
+using System.Windows.Media;
 
 
 namespace DMR2020.View
@@ -182,10 +183,17 @@ namespace DMR2020.View
             else
                 _testSetup.TestTime = null;
 
+            if (double.TryParse(TxtTestTemp.Text?.Trim(), out double temp))
+                _testSetup.TestTemp = temp;
+            else
+                _testSetup.TestTemp = null;
+
             _testSetup.TorqueUnit = GetComboContent(CboTorqueUnit);
             _testSetup.TimeUnit = GetComboContent(CboTimeUnit);
 
-            if (int.TryParse(GetComboContent(CboArc), out int arc))
+            var arcText = GetComboContent(CboArc);
+
+            if (double.TryParse(arcText, NumberStyles.Float, CultureInfo.InvariantCulture, out double arc))
                 _testSetup.Arc = arc;
             else
                 _testSetup.Arc = null;
