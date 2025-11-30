@@ -2,6 +2,8 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace DMR2020.View
 {
@@ -105,12 +107,33 @@ namespace DMR2020.View
             // Chặn không cho DataGrid xử lý wheel => không scroll
             e.Handled = true;
         }
+
+        private static readonly Regex _integerRegex = new Regex("^[0-9]+$");
+
+        private void SpecNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Chỉ cho phép chữ số 0-9
+            if (!_integerRegex.IsMatch(e.Text))
+                e.Handled = true;  // chặn ký tự
+        }
+
+        private void SpecNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Không cho nhập dấu chấm ".", dấu phẩy ","
+            if (e.Key == Key.OemPeriod ||
+                e.Key == Key.Decimal ||
+                e.Key == Key.OemComma)
+            {
+                e.Handled = true;
+            }
+        }
     }
 
     public class SpecItem
     {
         public string Spec { get; set; }
-        public double Min { get; set; }
-        public double Max { get; set; }
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public Boolean IsChecked { get; set; }
     }
 }

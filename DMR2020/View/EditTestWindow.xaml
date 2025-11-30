@@ -34,6 +34,7 @@
             <TextBox x:Name="TxtTestName"
                      Width="250"
                      Margin="10,0,0,0"
+                     Background="WhiteSmoke"
                      VerticalAlignment="Center"/>
         </StackPanel>
 
@@ -284,7 +285,6 @@
         </StackPanel>
 
         <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
-        <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -305,6 +305,8 @@
                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   PreviewMouseWheel="DgSpec_PreviewMouseWheel"
+                  Validation.ErrorTemplate="{x:Null}"
+                  Validation.ValidationAdornerSite="{x:Null}"
                   Margin="4">
 
                     <!-- ⚠⚠ Ở ĐÂY LÀ DataGrid.Columns – NẰM TRỰC TIẾP BÊN TRONG DataGrid ⚠⚠ -->
@@ -319,12 +321,26 @@
                         <!-- Cột 2: Minimum -->
                         <DataGridTextColumn Header="Minimum"
                                     Width="80"
-                                    Binding="{Binding Min}" />
+                                    Binding="{Binding Min}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <EventSetter Event="PreviewTextInput" Handler="SpecNumber_PreviewTextInput"/>
+                                    <EventSetter Event="PreviewKeyDown" Handler="SpecNumber_PreviewKeyDown"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
 
                         <!-- Cột 3: Maximum -->
                         <DataGridTextColumn Header="Maximum"
-                                    Width="80"
-                                    Binding="{Binding Max}" />
+                            Width="80"
+                            Binding="{Binding Max}">
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <EventSetter Event="PreviewTextInput" Handler="SpecNumber_PreviewTextInput"/>
+                                    <EventSetter Event="PreviewKeyDown" Handler="SpecNumber_PreviewKeyDown"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
 
                         <!-- Cột 4: Checkbox cuối, không header -->
                         <DataGridTemplateColumn Header="" Width="40">
