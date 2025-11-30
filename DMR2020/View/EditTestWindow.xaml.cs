@@ -1,25 +1,57 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using DMR2020.Data;
+using SqlSugar;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Input;
+using System.Collections.Generic;
+
 
 namespace DMR2020.View
 {
     public partial class EditTestWindow : Window
     {
         public string TestName { get; set; }
-        public EditTestWindow()
+        private TestSetup _testSetup;   // đây là record Test Setup hiện tại
+
+        public EditTestWindow() : this(null)
+        {
+        }
+
+        public EditTestWindow(TestSetup setup)
         {
             InitializeComponent();
 
             // Focus mặc định vào TextBox tên test
             TxtTestName.Focus();
+            
+            if (setup == null)
+            {
+                Title = "Add Test Item";
+                _testSetup = new TestSetup();      // Id = 0 → chắc chắn là INSERT
+                // TODO: nếu muốn default value thì set ở đây
+            }
+            else
+            {
+                Title = "Edit Test Item";
+                _testSetup = setup;
+                LoadTestSetupToUi();               // đổ dữ liệu lên UI nếu đang sửa
+            }
 
             LoadSpecTable();
 
             DgSpec.Loaded += (s, e) => LockScrollViewer();
+        }
+
+        private void LoadTestSetupToUi()
+        {
+            TxtTestName.Text = _testSetup.TestName;
+            TxtTestTime.Text = _testSetup.TestTime?.ToString();
+
+            // chọn lại torque unit, time unit, arc, result… theo _testSetup
+            // (nếu cần mình viết chi tiết tiếp)
         }
 
         private ScrollViewer _specScrollViewer;
@@ -55,14 +87,14 @@ namespace DMR2020.View
             return null;
         }
 
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: lưu dữ liệu từ các control vào model / property
-            // ...
+        //private void BtnSave_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // TODO: lưu dữ liệu từ các control vào model / property
+        //    // ...
 
-            this.DialogResult = true;   // báo cho SetupWindow biết là Save thành công
-            this.Close();
-        }
+        //    this.DialogResult = true;   // báo cho SetupWindow biết là Save thành công
+        //    this.Close();
+        //}
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
@@ -125,6 +157,123 @@ namespace DMR2020.View
                 e.Key == Key.OemComma)
             {
                 e.Handled = true;
+            }
+        }
+
+        private string GetComboContent(ComboBox cbo)
+        {
+            if (cbo?.SelectedItem is ComboBoxItem item && item.Content != null)
+                return item.Content.ToString();
+
+            return null;
+        }
+
+
+        private void SaveTestSetup()
+        {
+            // ===== 1. BASIC =====
+            _testSetup.TestName = TxtTestName.Text?.Trim();
+
+            if (int.TryParse(TxtTestTime.Text?.Trim(), out int testTime))
+                _testSetup.TestTime = testTime;
+            else
+                _testSetup.TestTime = null;
+
+            _testSetup.TorqueUnit = GetComboContent(CboTorqueUnit);
+            _testSetup.TimeUnit = GetComboContent(CboTimeUnit);
+
+            if (int.TryParse(GetComboContent(CboArc), out int arc))
+                _testSetup.Arc = arc;
+            else
+                _testSetup.Arc = null;
+
+            _testSetup.TanDeltaChecked = (ChkTanDelta.IsChecked == true);
+
+            // ===== 2. RESULTS =====
+            _testSetup.Result1Unit = GetComboContent(CboResult1);
+            _testSetup.Result1Value = TxtResult1.Text?.Trim();
+
+            _testSetup.Result2Unit = GetComboContent(CboResult2);
+            _testSetup.Result2Value = TxtResult2.Text?.Trim();
+
+            _testSetup.Result3Unit = GetComboContent(CboResult3);
+            _testSetup.Result3Value = TxtResult3.Text?.Trim();
+
+            _testSetup.Result4Unit = GetComboContent(CboResult4);
+            _testSetup.Result4Value = TxtResult4.Text?.Trim();
+
+            // ===== 3. SPEC TABLE (DgSpec → TestSetup) =====
+            var specList = DgSpec.ItemsSource as List<SpecItem>;
+            if (specList != null)
+            {
+                foreach (var row in specList)
+                {
+                    switch (row.Spec)
+                    {
+                        case "MH":
+                            _testSetup.MhMinValue = row.Min;
+                            _testSetup.MhMaxValue = row.Max;
+                            _testSetup.MhChecked = row.IsChecked;
+                            break;
+
+                        case "ts1":
+                            _testSetup.Ts1MinValue = row.Min;
+                            _testSetup.Ts1MaxValue = row.Max;
+                            _testSetup.Ts1Checked = row.IsChecked;
+                            break;
+
+                        case "tc10":
+                            _testSetup.Tc10MinValue = row.Min;
+                            _testSetup.Tc10MaxValue = row.Max;
+                            _testSetup.Tc10Checked = row.IsChecked;
+                            break;
+
+                        case "tc50":
+                            _testSetup.Tc50MinValue = row.Min;
+                            _testSetup.Tc50MaxValue = row.Max;
+                            _testSetup.Tc50Checked = row.IsChecked;
+                            break;
+
+                        case "tc90":
+                            _testSetup.Tc90MinValue = row.Min;
+                            _testSetup.Tc90MaxValue = row.Max;
+                            _testSetup.Tc90Checked = row.IsChecked;
+                            break;
+
+                            // ML hiện chưa có field trong TestSetup nên mình bỏ qua
+                    }
+                }
+            }
+
+            // ===== 4. LƯU XUỐNG DB VỚI SQLSUGAR =====
+            var db = Db.Instance.Client;
+
+            if (_testSetup.Id == 0)
+            {
+                int newId = db.Insertable(_testSetup).ExecuteReturnIdentity();
+                _testSetup.Id = newId;
+            }
+            else
+            {
+                db.Updateable(_testSetup).ExecuteCommand();
+            }
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveTestSetup();
+                MessageBox.Show("Test setup has been saved.", "Info",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+                this.DialogResult = true;
+                this.Close();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu Test Setup:\n" + ex.Message,
+                                "Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
