@@ -284,58 +284,73 @@
         </StackPanel>
 
         <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
+        <!-- ====== SPEC TABLE + TORQUE RANGE (PHẢI DƯỚI) ====== -->
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- Spec table -->
             <GroupBox Header="Spec."
-          Grid.Row="0"
-          Margin="0,0,0,8">
+              Grid.Row="0"
+              Margin="0,0,0,8">
                 <DataGrid x:Name="DgSpec"
-              AutoGenerateColumns="False"
-              HeadersVisibility="Column"
-              CanUserAddRows="False"
-              CanUserResizeColumns="False"
-              RowHeight="25"
-              ScrollViewer.VerticalScrollBarVisibility="Disabled"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-              Margin="4"
-              Loaded="DgSpec_Loaded">
-                    <!-- THÊM EVENT -->
+                  AutoGenerateColumns="False"
+                  HeadersVisibility="Column"
+                  CanUserAddRows="False"
+                  CanUserResizeColumns="False"
+                  RowHeight="25"
+                  Height="175"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Margin="4">
+
+                    <!-- ⚠⚠ Ở ĐÂY LÀ DataGrid.Columns – NẰM TRỰC TIẾP BÊN TRONG DataGrid ⚠⚠ -->
                     <DataGrid.Columns>
-                        <!-- Cột 1: Spec. Input - KHÔNG CHO EDIT -->
+
+                        <!-- Cột 1: Spec. Input -->
                         <DataGridTextColumn Header="Spec. Input"
-                        Width="*"
-                        Binding="{Binding Spec}"
-                        IsReadOnly="True" />
+                                    Width="*"
+                                    Binding="{Binding Spec}"
+                                    IsReadOnly="True" />
 
-                        <!-- Cột 2: Minimum - cho phép edit -->
+                        <!-- Cột 2: Minimum -->
                         <DataGridTextColumn Header="Minimum"
-                        Width="80"
-                        Binding="{Binding Min}" />
+                                    Width="80"
+                                    Binding="{Binding Min}" />
 
-                        <!-- Cột 3: Maximum - cho phép edit -->
+                        <!-- Cột 3: Maximum -->
                         <DataGridTextColumn Header="Maximum"
-                        Width="80"
-                        Binding="{Binding Max}" />
+                                    Width="80"
+                                    Binding="{Binding Max}" />
+
+                        <!-- Cột 4: Checkbox cuối, không header -->
+                        <DataGridTemplateColumn Header="" Width="40">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsChecked}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
 
             <!-- Torque Range -->
             <StackPanel Grid.Row="1"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Right">
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
                 <TextBlock Text="Torque Range"
-                           VerticalAlignment="Center"
-                           Margin="0,0,8,0"/>
+                   VerticalAlignment="Center"
+                   Margin="0,0,8,0"/>
                 <ComboBox x:Name="CboTorqueRange"
-                          Width="70"
-                          Margin="0,0,11,0"
-                          SelectedIndex="0">
+                  Width="70"
+                  Margin="0,0,11,0"
+                  SelectedIndex="0">
                     <ComboBoxItem Content="Auto"/>
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
@@ -346,6 +361,8 @@
                 </ComboBox>
             </StackPanel>
         </Grid>
+
+
 
         <!-- ====== NÚT SAVE / EXIT ====== -->
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
