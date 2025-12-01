@@ -1,6 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DMR2020.Model;
-using System;
 
 namespace DMR2020.ViewModel
 {
@@ -29,6 +29,15 @@ namespace DMR2020.ViewModel
         public double CurveX { get; set; }
         #endregion
 
+        partial void OnTypeChanged(FeaturePointTypes oldValue, FeaturePointTypes newValue)
+        {
+            GenName();
+        }
+
+        partial void OnTypeValueChanged(double oldValue, double newValue)
+        {
+            GenName();
+        }
 
         /// <summary>
         ///  Tạo tên từ Type, TypeValue
