@@ -68,7 +68,7 @@ namespace DMR2020.View
             _view?.Refresh();
         }
 
-        // Nút Add (bạn có thể thay bằng mở window tạo test mới)
+        // Nút Add
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             var win = new EditTestWindow();
@@ -80,8 +80,11 @@ namespace DMR2020.View
                 Items.Add(new TestItem
                 {
                     TestName = win.TestName,
-                    CreatedTime = DateTime.Now   // <-- đúng kiểu DateTime
+                    CreatedTime = DateTime.Now   // đúng kiểu DateTime
                 });
+
+                // refresh filter (nếu đang search)
+                _view?.Refresh();
             }
         }
 
@@ -94,13 +97,12 @@ namespace DMR2020.View
             var win = new EditTestWindow();
             win.Title = "Edit Test Item";
             win.Owner = this;
-
-            // nạp dữ liệu cũ
-            win.TestName = item.TestName;
+            win.TestName = item.TestName;   // nạp dữ liệu cũ
 
             if (win.ShowDialog() == true)
             {
-                item.TestName = win.TestName;
+                item.TestName = win.TestName;   // lấy lại TestName mới
+                _view?.Refresh();
             }
         }
 
@@ -118,6 +120,7 @@ namespace DMR2020.View
                 if (result == MessageBoxResult.Yes)
                 {
                     Items.Remove(item);
+                    _view?.Refresh();
                 }
             }
         }
