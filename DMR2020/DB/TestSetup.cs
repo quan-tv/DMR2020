@@ -110,8 +110,8 @@ namespace DMR2020.Data
         [SugarColumn(ColumnName = "torque_range")]
         public int TorqueRange { get; set; }
 
-        [SugarColumn(ColumnName = "created_time")]
-        public Timestamp CreatedTime { get; set; }
+        [SugarColumn(ColumnName = "created_time", IsNullable = true)]
+        public DateTime? CreatedTime { get; set; }
 
     }
 }

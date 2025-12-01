@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DMR2020.Data;
+using SqlSugar;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -17,26 +19,46 @@ namespace DMR2020.View
         {
             InitializeComponent();
 
-            // Dữ liệu mẫu
-            Items = new ObservableCollection<TestItem>
-            {
-                new TestItem
-                {
-                    TestName = "Tensile Test A",
-                    CreatedTime = DateTime.Now.AddMinutes(-15)
-                },
-                new TestItem
-                {
-                    TestName = "Compression Test B",
-                    CreatedTime = DateTime.Now
-                }
-            };
+            // 1) Load dữ liệu từ database
+            LoadDataFromDatabase();
 
-            LvTests.ItemsSource = Items;
-
-            // CollectionView để filter
+            // 2) Tạo CollectionView để filter – CHỈ CẦN LÀM 1 LẦN
             _view = CollectionViewSource.GetDefaultView(LvTests.ItemsSource);
             _view.Filter = FilterTests;
+        }
+
+        private void LoadDataFromDatabase()
+        {
+            try
+            {
+                // Dùng Db singleton của anh: Instance.Client là SqlSugarScope
+                var dbList = Db.Instance.Client.Queryable<TestSetup>()
+                                               .OrderBy(x => x.Id, OrderByType.Desc)
+                                               .ToList();
+
+                // Map sang model dùng cho UI
+                Items = new ObservableCollection<TestItem>();
+
+                foreach (var x in dbList)
+                {
+                    Items.Add(new TestItem
+                    {
+                        TestName = x.TestName,
+                        // Nếu CreatedTime null thì fallback về DateTime.Now
+                        CreatedTime = x.CreatedTime ?? DateTime.Now
+                    });
+                }
+
+                LvTests.ItemsSource = Items;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi load dữ liệu Test Setup:\n" + ex.Message,
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                Items = new ObservableCollection<TestItem>();
+                LvTests.ItemsSource = Items;
+            }
         }
 
         // Model 1 dòng
