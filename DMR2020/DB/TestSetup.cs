@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Google.Protobuf.WellKnownTypes;
+using SqlSugar;
 
 namespace DMR2020.Data
 {
@@ -105,5 +106,12 @@ namespace DMR2020.Data
 
         [SugarColumn(ColumnName = "tc90_checked")]
         public bool Tc90Checked { get; set; }
+
+        [SugarColumn(ColumnName = "torque_range")]
+        public int TorqueRange { get; set; }
+
+        [SugarColumn(ColumnName = "created_time")]
+        public Timestamp CreatedTime { get; set; }
+
     }
 }
