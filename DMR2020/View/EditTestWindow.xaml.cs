@@ -30,6 +30,17 @@ namespace DMR2020.View
             LoadSpecTable();
         }
 
+        private void DgSpec_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            // Chặn DataGrid tự scroll khi chọn dòng
+            e.Handled = true;
+        }
+
+        private void DgSpecRow_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         private void EditTestWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Khi mở form:

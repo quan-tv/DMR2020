@@ -296,65 +296,53 @@
               Grid.Row="0"
               Margin="0,0,0,8">
                 <DataGrid x:Name="DgSpec"
-                  AutoGenerateColumns="False"
-                  HeadersVisibility="Column"
-                  CanUserAddRows="False"
-                  CanUserResizeColumns="False"
-                  RowHeight="25"
-                  Height="175"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  PreviewMouseWheel="DgSpec_PreviewMouseWheel"
-                  Validation.ErrorTemplate="{x:Null}"
-                  Validation.ValidationAdornerSite="{x:Null}"
-                  Margin="4">
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          CanUserResizeColumns="False"
+          HeadersVisibility="Column"
 
-                    <!-- ⚠⚠ Ở ĐÂY LÀ DataGrid.Columns – NẰM TRỰC TIẾP BÊN TRONG DataGrid ⚠⚠ -->
+          RowHeight="25"
+          ColumnHeaderHeight="25"
+
+          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            RequestBringIntoView="DgSpec_RequestBringIntoView"
+          Height="175"
+
+                    Margin="4">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="RequestBringIntoView"
+                         Handler="DgSpecRow_RequestBringIntoView"/>
+                        </Style>
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
 
-                        <!-- Cột 1: Spec. Input -->
                         <DataGridTextColumn Header="Spec. Input"
-                                    Width="*"
-                                    Binding="{Binding Spec}"
-                                    IsReadOnly="True" />
+                            Width="*"
+                            Binding="{Binding Spec}"
+                            IsReadOnly="True" />
 
-                        <!-- Cột 2: Minimum -->
                         <DataGridTextColumn Header="Minimum"
-                                    Width="80"
-                                    Binding="{Binding Min}">
-                            <DataGridTextColumn.EditingElementStyle>
-                                <Style TargetType="TextBox">
-                                    <EventSetter Event="PreviewTextInput" Handler="SpecNumber_PreviewTextInput"/>
-                                    <EventSetter Event="PreviewKeyDown" Handler="SpecNumber_PreviewKeyDown"/>
-                                </Style>
-                            </DataGridTextColumn.EditingElementStyle>
-                        </DataGridTextColumn>
+                            Width="80"
+                            Binding="{Binding Min}" />
 
-                        <!-- Cột 3: Maximum -->
                         <DataGridTextColumn Header="Maximum"
                             Width="80"
-                            Binding="{Binding Max}">
-                            <DataGridTextColumn.EditingElementStyle>
-                                <Style TargetType="TextBox">
-                                    <EventSetter Event="PreviewTextInput" Handler="SpecNumber_PreviewTextInput"/>
-                                    <EventSetter Event="PreviewKeyDown" Handler="SpecNumber_PreviewKeyDown"/>
-                                </Style>
-                            </DataGridTextColumn.EditingElementStyle>
-                        </DataGridTextColumn>
+                            Binding="{Binding Max}" />
 
-                        <!-- Cột 4: Checkbox cuối, không header -->
                         <DataGridTemplateColumn Header="" Width="40">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                    <CheckBox IsChecked="{Binding IsChecked}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-
                     </DataGrid.Columns>
+
                 </DataGrid>
             </GroupBox>
 
