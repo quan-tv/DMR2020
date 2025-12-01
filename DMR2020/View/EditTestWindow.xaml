@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit Test" Height="500" Width="650"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Background="WhiteSmoke">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,12 +29,11 @@
                     Margin="0,0,0,8">
             <TextBlock Text="Test Name"
                        FontWeight="Bold"
-                       FontSize="16"
+                       FontSize="14"
                        VerticalAlignment="Center"/>
             <TextBox x:Name="TxtTestName"
                      Width="250"
                      Margin="10,0,0,0"
-                     Background="WhiteSmoke"
                      VerticalAlignment="Center"/>
         </StackPanel>
 
@@ -61,22 +60,12 @@
                            VerticalAlignment="Center" />
                 <TextBox x:Name="TxtTestTime"
                          Grid.Row="0" Grid.Column="1"
-                         Background="WhiteSmoke"
                          Margin="26,0,39,3"/>
                 <TextBlock Grid.Column="1"
                            Text="min."
                            VerticalAlignment="Center"
-                           Height="14"
                            Margin="138,0,6,0"
                            RenderTransformOrigin="0.5,0.5">
-                    <TextBlock.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TextBlock.RenderTransform>
                 </TextBlock>
 
                 <!-- Torque Unit -->
@@ -113,107 +102,7 @@
         <GroupBox Grid.Row="1" Grid.Column="1"
                   Header="Results"
                   Margin="0,0,0,0">
-            <Grid Margin="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="60"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Result 1 -->
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Result 1"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult1"
-                          Grid.Row="0" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,0,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult1"
-                         Grid.Row="0" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 2 -->
-                <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Result 2"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult2"
-                          Grid.Row="1" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,120,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult2"
-                         Grid.Row="1" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 3 -->
-                <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Result 3"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult3"
-                          Grid.Row="2" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,4,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult3"
-                         Grid.Row="2" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 4 -->
-                <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Result 4"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult4"
-                          Grid.Row="3" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,0,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult4"
-                         Grid.Row="3" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-            </Grid>
+            
         </GroupBox>
 
         <!-- ====== TEMPERATURE + ARC (TRÁI DƯỚI) ====== -->
