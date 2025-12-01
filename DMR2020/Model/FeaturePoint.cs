@@ -25,5 +25,23 @@
         public double CurveY { get; set; }
         public double CurveX { get; set; }
         #endregion
+
+        /// <summary>
+        ///  Tạo tên từ Type, TypeValue
+        /// </summary>
+        public void GenName()
+        {
+            switch (Type)
+            {
+                case FeaturePointTypes.MI: Name = "MI"; break;
+                case FeaturePointTypes.ML: Name = "ML"; break;
+                case FeaturePointTypes.MH: Name = "MH"; break;
+                case FeaturePointTypes.ts: Name = $"ts{TypeValue}"; break;
+                case FeaturePointTypes.tc: Name = $"tc{TypeValue}"; break;
+                case FeaturePointTypes.Tc: Name = $"Tc{TypeValue}"; break;
+                case FeaturePointTypes.T: Name = $"T{TypeValue}"; break;
+                case FeaturePointTypes.t: Name = $"t{TypeValue}"; break;
+            }
+        }
     }
 }
