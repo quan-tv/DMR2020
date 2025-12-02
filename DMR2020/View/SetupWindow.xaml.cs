@@ -101,7 +101,7 @@ namespace DMR2020.View
             {
                 Items.Add(new TestItem
                 {
-                    TestName = win.TestName,
+                    //TestName = win.TestName,
                     CreatedTime = DateTime.Now   // đúng kiểu DateTime
                 });
 
@@ -119,11 +119,11 @@ namespace DMR2020.View
             var win = new EditTestWindow();
             win.Title = "Edit Test Item";
             win.Owner = this;
-            win.TestName = item.TestName;   // nạp dữ liệu cũ
+            //win.TestName = item.TestName;   // nạp dữ liệu cũ
 
             if (win.ShowDialog() == true)
             {
-                item.TestName = win.TestName;   // lấy lại TestName mới
+                //item.TestName = win.TestName;   // lấy lại TestName mới
                 _view?.Refresh();
             }
         }

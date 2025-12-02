@@ -6,11 +6,13 @@ namespace DMR2020.ViewModel
 {
     public partial class FeaturePointVM: ObservableObject
     {
+        public string? Title { get; set; }
+
         #region Tên điểm
         [ObservableProperty]
         private string? _name;
         [ObservableProperty]
-        private FeaturePointTypes _type;
+        private string? _type;
         [ObservableProperty]
         private double _typeValue;
         #endregion
@@ -29,7 +31,7 @@ namespace DMR2020.ViewModel
         public double CurveX { get; set; }
         #endregion
 
-        partial void OnTypeChanged(FeaturePointTypes oldValue, FeaturePointTypes newValue)
+        partial void OnTypeChanged(string? oldValue, string? newValue)
         {
             GenName();
         }
@@ -46,14 +48,10 @@ namespace DMR2020.ViewModel
         {
             switch (Type)
             {
-                case FeaturePointTypes.MI: Name = "MI"; break;
-                case FeaturePointTypes.ML: Name = "ML"; break;
-                case FeaturePointTypes.MH: Name = "MH"; break;
-                case FeaturePointTypes.ts: Name = $"ts{TypeValue}"; break;
-                case FeaturePointTypes.tc: Name = $"tc{TypeValue}"; break;
-                case FeaturePointTypes.Tc: Name = $"Tc{TypeValue}"; break;
-                case FeaturePointTypes.T: Name = $"T{TypeValue}"; break;
-                case FeaturePointTypes.t: Name = $"t{TypeValue}"; break;
+                case "MI": Name = "MI"; break;
+                case "ML": Name = "ML"; break;
+                case "MH": Name = "MH"; break;
+                default: Name = $"{Type}{TypeValue}"; break;
             }
         }
 

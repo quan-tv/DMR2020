@@ -1,33 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DMR2020.ViewModel;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace DMR2020.View
 {
-    public class SpecRow
-    {
-        public string Spec { get; set; }
-        public double? Min { get; set; }
-        public double? Max { get; set; }
-        public bool IsChecked { get; set; }
-    }
-
     public partial class EditTestWindow : Window
     {
-        // Thuộc tính để SetupWindow lấy/gán Test Name
-        public string TestName { get; set; }
-
-        public List<SpecRow> SpecRows { get; set; }
+        public TestSettingsVM TestSettings = new();
+        private CollectionViewSource _cvsResults { get; set; } =  new();
+        public CollectionView CVResults { get; set; }
+        public List<string> LstFeaturePointTypes { get; set; } = ["ts", "tc", "Tc", "T", "t"];
 
         public EditTestWindow()
         {
             InitializeComponent();
+            DataContext = this;
 
-            Loaded += EditTestWindow_Loaded;
+            _cvsResults.Source = TestSettings.FeaturePoints;
+            CVResults = (CollectionView)_cvsResults.View;
+            CVResults.Filter = x =>
+            {
+                if (x is FeaturePointVM f)
+                {
+                    return !string.IsNullOrEmpty(f.Title);
+                }
+                return false;
+            };
 
-            LoadSpecTable();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            TxtTestName.Focus();
+            TxtTestName.SelectAll();
         }
 
         private void DgSpec_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
@@ -41,39 +51,11 @@ namespace DMR2020.View
             e.Handled = true;
         }
 
-        private void EditTestWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Khi mở form:
-            // - Nếu là Edit: TestName đã được gán từ bên ngoài
-            // - Nếu là Add: TestName = null
-            TxtTestName.Text = TestName ?? string.Empty;
-
-            TxtTestName.Focus();
-            TxtTestName.SelectAll();
-        }
-
-        private void LoadSpecTable()
-        {
-            SpecRows = new List<SpecRow>
-            {
-                new SpecRow { Spec = "ML"   },
-                new SpecRow { Spec = "MH"   },
-                new SpecRow { Spec = "ts1"  },
-                new SpecRow { Spec = "tc10" },
-                new SpecRow { Spec = "tc50" },
-                new SpecRow { Spec = "tc90" }
-            };
-
-            DgSpec.ItemsSource = SpecRows;
-        }
-
         // ====== SAVE / EXIT ======
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            TestName = TxtTestName.Text?.Trim();
-
-            if (string.IsNullOrEmpty(TestName))
+            if (string.IsNullOrEmpty(TestSettings.Name))
             {
                 MessageBox.Show("Please input Test Name.",
                                 "Warning",
@@ -84,7 +66,6 @@ namespace DMR2020.View
             }
 
             // Nếu bạn cần validate thêm (spec, time...) thì làm thêm ở đây
-
             DialogResult = true;   // trả về true cho ShowDialog()
         }
 
@@ -94,7 +75,6 @@ namespace DMR2020.View
         }
 
         // ====== SỰ KIỆN CHO DATAGRID SPEC ======
-
         private void DgSpec_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             // Ngăn scroll ăn vào DataGrid nếu cần (hoặc bỏ trống cũng được)

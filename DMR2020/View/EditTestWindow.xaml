@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit Test" Height="500" Width="650"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner" Background="WhiteSmoke">
+        WindowStartupLocation="CenterOwner" Background="WhiteSmoke"
+        Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -41,68 +42,55 @@
         <GroupBox Grid.Row="1" Grid.Column="0"
                   Header="Advanced"
                   Margin="0,0,8,8">
-            <Grid Margin="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
+            <StackPanel>
                 <!-- Test Time -->
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Test Time"
-                           VerticalAlignment="Center" />
-                <TextBox x:Name="TxtTestTime"
-                         Grid.Row="0" Grid.Column="1"
-                         Margin="26,0,39,3"/>
-                <TextBlock Grid.Column="1"
-                           Text="min."
-                           VerticalAlignment="Center"
-                           Margin="138,0,6,0"
-                           RenderTransformOrigin="0.5,0.5">
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
+                    <TextBlock Width="72" Text="Test Time" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TxtTestTime" Width="120" Padding="2 1"/>
+                    <TextBlock Text=" min." VerticalAlignment="Center"/>
+                </StackPanel>
 
                 <!-- Torque Unit -->
-                <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Torque Unit"
-                           Margin="0,4,0,0"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboTorqueUnit"
-                          Grid.Row="1" Grid.Column="1"
-                          Margin="26,4,6,6"
-                          SelectedIndex="0">
-                    <ComboBoxItem Content="lb-in"/>
-                    <ComboBoxItem Content="Kg-cm"/>
-                    <ComboBoxItem Content="dN-m"/>
-                    <ComboBoxItem Content="N-m"/>
-                </ComboBox>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
+                    <TextBlock Width="72" Text="Torque Unit" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="CboTorqueUnit" Width="72"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="lb-in"/>
+                        <ComboBoxItem Content="Kg-cm"/>
+                        <ComboBoxItem Content="dN-m"/>
+                        <ComboBoxItem Content="N-m"/>
+                    </ComboBox>
+                </StackPanel>
 
                 <!-- Time Unit -->
-                <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Time Unit"
-                           Margin="0,4,0,0"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboTimeUnit"
-                          Grid.Row="2" Grid.Column="1"
-                          SelectedIndex="0"
-                          Margin="26,4,6,5">
-                    <ComboBoxItem Content="mm:ss"/>
-                    <ComboBoxItem Content="mm."/>
-                </ComboBox>
-            </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="72" Text="Time Unit" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="CboTimeUnit" Width="72"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="mm:ss"/>
+                        <ComboBoxItem Content="mm."/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
         </GroupBox>
 
         <!-- ====== RESULTS (PHẢI TRÊN) ====== -->
         <GroupBox Grid.Row="1" Grid.Column="1"
                   Header="Results"
                   Margin="0,0,0,0">
-            
+            <ItemsControl x:Name="IcLstFeaturePoints" ItemsSource="{Binding CVResults}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 3">
+                            <TextBlock Text="{Binding Title}" Width="72" VerticalAlignment="Center"/>
+                            <ComboBox Width="60" Margin="6 0 0 0"
+                                      ItemsSource="{Binding DataContext.LstFeaturePointTypes, RelativeSource={RelativeSource AncestorType=Window}}"
+                                      SelectedItem="{Binding Type}"/>
+                            <TextBox Width="60" Margin="6 0 0 0" Text="{Binding TypeValue}" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </GroupBox>
 
         <!-- ====== TEMPERATURE + ARC (TRÁI DƯỚI) ====== -->

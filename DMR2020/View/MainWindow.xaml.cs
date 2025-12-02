@@ -44,5 +44,14 @@ namespace DMR2020
         {
             this.Close();
         }
+
+        private void BtDebugTest_Click(object sender, RoutedEventArgs e)
+        {
+            EditTestWindow wnd = new()
+            {
+                Owner = this,
+            };
+            wnd.ShowDialog();
+        }
     }
 }
