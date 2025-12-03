@@ -11,7 +11,7 @@ namespace DMR2020.View
 {
     public partial class EditTestWindow : Window
     {
-        public TestSettingsVM TestSettings = new();
+        public TestSettingsVM TestSettings { get; set; } = new();
         private CollectionViewSource _cvsResults { get; set; } =  new();
         public CollectionView CVResults { get; set; }
         public List<string> LstFeaturePointTypes { get; set; } = ["ts", "tc", "Tc", "T", "t"];
@@ -81,7 +81,25 @@ namespace DMR2020.View
             e.Handled = true;
         }
 
-        private void SpecNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void DgSpec_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Get the original source of the event, which might be a TextBox within a cell
+            if (e.OriginalSource is TextBox textBox)
+            {
+                // Perform checks or modifications
+                // Example: Prevent non-numeric input in a specific column
+                //if (DgSpec.CurrentColumn.Header.ToString() == "Minimun")
+                //{
+                // Chặn ký tự không phải số / dấu . / dấu -
+                if (!char.IsDigit(e.Text, 0) && e.Text != "." && e.Text != "-")
+                {
+                    e.Handled = true;
+                }
+                //}
+            }
+        }
+
+        private void TxtTypeValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // Chặn ký tự không phải số / dấu . / dấu -
             if (!char.IsDigit(e.Text, 0) && e.Text != "." && e.Text != "-")
