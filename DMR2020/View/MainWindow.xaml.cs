@@ -53,5 +53,13 @@ namespace DMR2020
             };
             wnd.ShowDialog();
         }
+
+        private void BtDebugTestDb_Click(object sender, RoutedEventArgs e)
+        {
+            var db = Db.DbBridge.Instance;
+
+            db.CreateDatabaseIfNotExists();
+            db.TestConnection();
+        }
     }
 }

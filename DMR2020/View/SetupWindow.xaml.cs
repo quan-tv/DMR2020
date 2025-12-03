@@ -1,4 +1,5 @@
 ﻿using DMR2020.Data;
+using DMR2020.Db;
 using SqlSugar;
 using System;
 using System.Collections.ObjectModel;
@@ -32,7 +33,7 @@ namespace DMR2020.View
             try
             {
                 // Dùng Db singleton của anh: Instance.Client là SqlSugarScope
-                var dbList = Db.Instance.Client.Queryable<TestSetup>()
+                var dbList = DbBridge.Instance.Client.Queryable<TestSetup>()
                                                .OrderBy(x => x.Id, OrderByType.Desc)
                                                .ToList();
 
