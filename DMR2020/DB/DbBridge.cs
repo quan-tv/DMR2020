@@ -1,4 +1,6 @@
-﻿using SqlSugar;
+﻿using DMR2020.Model;
+using SqlSugar;
+using System.Windows.Input;
 
 namespace DMR2020.Db
 {
@@ -62,6 +64,11 @@ namespace DMR2020.Db
             {
                 // SqlSugar tự kiểm tra, nếu chưa có thì tạo DB + cấu trúc
                 Client.DbMaintenance.CreateDatabase();
+
+                // 2. Tạo bảng student, course
+                Client.CodeFirst.InitTables(
+                    typeof(FeaturePointDO)
+                );
             }
             catch (Exception ex)
             {
