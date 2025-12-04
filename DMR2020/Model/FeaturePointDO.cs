@@ -9,11 +9,8 @@ namespace DMR2020.Model
     /// <summary>
     /// Các điểm đặc trưng của đồ thị
     /// </summary>
-    public class FeaturePointDO
+    public class FeaturePointDO: BaseDataTransferObject
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
-
         #region Tên điểm
         [SugarColumn(ColumnName="kieu")]
         public FeaturePointTypes Type { get; set; }

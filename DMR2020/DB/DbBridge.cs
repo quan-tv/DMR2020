@@ -26,7 +26,7 @@ namespace DMR2020.Db
                     ConnectionString = $"Server=localhost;Port=3306;Database=dmr2020;User Id=root;Password={_testPw};",
                     DbType = DbType.MySql,
                     IsAutoCloseConnection = true,
-                    InitKeyType = InitKeyType.Attribute
+                    InitKeyType = InitKeyType.Attribute,
                 },
                 db =>
                 {
