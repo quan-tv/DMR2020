@@ -2,6 +2,7 @@
 using System.Windows;
 using System.IO.Ports;
 using DMR2020.View;
+using DMR2020.DB;
 
 namespace DMR2020
 {
@@ -50,17 +51,20 @@ namespace DMR2020
             var win = new ConfirmPasswordWindow("Settings");
             win.Owner = this;
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            PMSettings pm = PMSettings.Instance;
 
             if (win.ShowDialog() == true)
             {
-                MessageBox.Show("Mo setting");
+                MessageBox.Show("Mở window setting");
+                
                 // Mở windown Settings
+                
+                //var win = new SettingsWindow();
+                //win.Owner = this;
+                //win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                //win.ShowDialog();
             }
 
-            //var win = new SettingsWindow();
-            //win.Owner = this;
-            //win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            //win.ShowDialog();
         }
     }
 }
