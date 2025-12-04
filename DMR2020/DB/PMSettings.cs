@@ -41,6 +41,14 @@ namespace DMR2020.DB
         {
             Load();        
         }
+
+        public void Save()
+        {
+            foreach (var item in SettingsDict.Values)
+            {
+                Db.Instance.Client.Updateable(item).ExecuteCommand();
+            }
+        }
     }
 
 }

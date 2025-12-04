@@ -78,7 +78,7 @@
         <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,15,8">
             <TextBlock Text="Temperature Unit"
                Margin="0,0,0,2"/>
-            <ComboBox SelectedIndex="0">
+            <ComboBox x:Name="CboTemperatureUnit" SelectedIndex="0">
                 <ComboBoxItem Content="Celsius"/>
                 <ComboBoxItem Content="Fahrenheit"/>
             </ComboBox>
@@ -106,9 +106,11 @@
 
         <!-- ===== SAVE BUTTON ===== -->
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                x:Name="BtnSave"
                 Content="Save"
                 Width="170" Height="30"
                 HorizontalAlignment="Center"
+                Click="BtnSave_Click"
                 />
     </Grid>
 </Window>
