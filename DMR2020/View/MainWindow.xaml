@@ -44,7 +44,7 @@
             <MenuItem Header="Report"      Style="{StaticResource TopMenuItemStyle}"/>
             <MenuItem Header="Delete"      Style="{StaticResource TopMenuItemStyle}"/>
             <MenuItem Header="Calibration" Style="{StaticResource TopMenuItemStyle}"/>
-            <MenuItem Header="Settings"    Style="{StaticResource TopMenuItemStyle}"/>
+            <MenuItem Header="Settings"    Style="{StaticResource TopMenuItemStyle}" Click="SettingsMenuItem_Click"/>
 
             <!-- COMBOBOX CHỌN CỔNG COM NGAY TRÊN THANH MENU -->
             <ComboBox x:Name="CboComPorts"
