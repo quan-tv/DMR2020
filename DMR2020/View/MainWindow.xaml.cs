@@ -47,15 +47,20 @@ namespace DMR2020
 
         private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var win = new ConfirmPasswordWindow("Settings");
+            //var win = new ConfirmPasswordWindow("Settings");
+            //win.Owner = this;
+            //win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            //if (win.ShowDialog() == true) 
+            //{
+            //    MessageBox.Show("Mo setting");
+            //    // Mở windown Settings                
+            //}
+
+            var win = new SettingsWindow();
             win.Owner = this;
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            
-            if (win.ShowDialog() == true) 
-            {
-                MessageBox.Show("Mo setting");
-                // Mở windown Settings                
-            }
+            win.ShowDialog();
         }
     }
 }
