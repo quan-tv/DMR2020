@@ -29,7 +29,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,15,8">
             <TextBlock Text="Operation Mode"
                        Margin="0,0,0,2"/>
-            <ComboBox Height="24" SelectedIndex="0">
+            <ComboBox x:Name="CboOperationMode" Height="24" SelectedIndex="0">
                 <ComboBoxItem Content="1. Door open at finish"/>
                 <ComboBoxItem Content="2. Door not open at finish"/>
             </ComboBox>
@@ -39,7 +39,7 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,8">
             <TextBlock Text="Test Mode"
                        Margin="0,0,0,2"/>
-            <ComboBox Height="24" SelectedIndex="0">
+            <ComboBox x:Name="CboTestMode" Height="24" SelectedIndex="0">
                 <ComboBoxItem Content="Rheo Single"/>
                 <ComboBoxItem Content="Mooney Single"/>
                 <ComboBoxItem Content="Rheo - Mooney"/>
@@ -52,7 +52,7 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,15,8">
             <TextBlock Text="TIC Select"
                        Margin="0,0,0,2"/>
-            <ComboBox Height="24" SelectedIndex="0">
+            <ComboBox x:Name="CboTIC" Height="24" SelectedIndex="0">
                 <ComboBoxItem Content="OMRON"/>
                 <ComboBoxItem Content="Autonics"/>
                 <ComboBoxItem Content="CompoWay"/>
@@ -66,7 +66,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,8">
             <TextBlock Text="Language"
                        Margin="0,0,0,2"/>
-            <ComboBox Height="24" SelectedIndex="0">
+            <ComboBox x:Name="CboLanguage" Height="24" SelectedIndex="0">
                 <ComboBoxItem Content="English"/>
                 <ComboBoxItem Content="Korean"/>
                 <ComboBoxItem Content="Chinese"/>
@@ -101,7 +101,7 @@
                     Margin="0,8,14,12">
             <TextBlock Text="Company Name"
                        Margin="0,0,0,2"/>
-            <TextBox Height="22" Text="" Background="WhiteSmoke"/>
+            <TextBox x:Name="TxtCompanyName" Height="22" Text="" Background="WhiteSmoke"/>
         </StackPanel>
 
         <!-- ===== SAVE BUTTON ===== -->
