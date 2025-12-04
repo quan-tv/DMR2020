@@ -6,6 +6,7 @@ namespace DMR2020.ViewModel
 {
     public partial class FeaturePointVM: ObservableObject
     {
+        public int Id { get; set; }
         public string? Title { get; set; }
 
         #region Tên điểm
@@ -55,5 +56,34 @@ namespace DMR2020.ViewModel
             }
         }
 
+        public void FromDO(FeaturePointDO o)
+        {
+            Id = o.Id;
+            Type = o.Type.ToString();
+            TypeValue = o.TypeValue;
+            SpecMin = o.SpecMin;
+            SpecMax = o.SpecMax;
+            IsSpecChecked = o.IsSpecChecked;            
+        }
+
+        public void ToDO(FeaturePointDO o)
+        {
+            o.Id = Id;
+            o.Type = Type switch
+            {
+                "MI" => FeaturePointTypes.MI,
+                "ML" => FeaturePointTypes.ML,
+                "MH" => FeaturePointTypes.MH,
+                "ts" => FeaturePointTypes.ts,
+                "tc" => FeaturePointTypes.tc,
+                "Tc" => FeaturePointTypes.Tc,
+                "T" => FeaturePointTypes.T,
+                _ => FeaturePointTypes.t,
+            };
+            o.TypeValue = TypeValue;
+            o.SpecMin = SpecMin;
+            o.SpecMax = SpecMax;
+            o.IsSpecChecked = IsSpecChecked;
+        }
     }
 }
