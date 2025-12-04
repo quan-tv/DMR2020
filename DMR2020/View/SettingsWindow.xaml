@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DMR2020.View"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
+        Title="SettingsWindow" Height="320" Width="600">
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <!-- Operation/Test mode -->
@@ -86,21 +86,22 @@
 
         <!-- ===== RIGHT: INSERT LOGO BUTTON ===== -->
         <Button Grid.Row="2" Grid.Column="1"
-                Content="Insert Logo"
+                Content="Select Logo.."
                 Width="110"
+                Height="20"
                 HorizontalAlignment="Left"
-                Margin="0,18,0,0"
+                VerticalAlignment="Center"
+                Margin="0,12,0,0"
                 BorderBrush="Black"
                 />
 
         <!-- ===== COMPANY NAME (SPAN 2 COLUMNS) ===== -->
         <StackPanel Grid.Row="3" Grid.Column="0"
                     Grid.ColumnSpan="1"
-                    Margin="0,8,0,12">
+                    Margin="0,8,14,12">
             <TextBlock Text="Company Name"
-                       FontWeight="Bold"
                        Margin="0,0,0,2"/>
-            <TextBox Height="22" Text=""/>
+            <TextBox Height="22" Text="" Background="WhiteSmoke"/>
         </StackPanel>
 
         <!-- ===== SAVE BUTTON ===== -->
@@ -108,7 +109,6 @@
                 Content="Save"
                 Width="170" Height="30"
                 HorizontalAlignment="Center"
-                BorderBrush="Black"
                 />
     </Grid>
 </Window>

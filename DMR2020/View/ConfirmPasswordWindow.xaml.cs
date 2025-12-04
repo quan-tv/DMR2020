@@ -23,9 +23,10 @@ namespace DMR2020.View
             {
                 e.Handled = true;
 
-                var list = Db.Instance.Client.Queryable<Settings>().ToList();
+                var list = Db.Instance.Client.Queryable<Settings>().
+                                                Where(static x => x.ten == "password").ToList();
 
-                string password = list.First().password;
+                string password = list.First().giatri;
 
                 if (PwdInput.Password == password)
                 {
