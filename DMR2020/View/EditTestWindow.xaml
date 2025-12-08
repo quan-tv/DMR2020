@@ -3,7 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Edit Test" Height="500" Width="650"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Background="WhiteSmoke"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="DbSpecColumnCellStyle" TargetType="DataGridCell">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0 3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"                                          
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DgSpecFixedColumnCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource DbSpecColumnCellStyle}">
+            <Setter Property="Background" Value="DodgerBlue" />
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="DgSpecInputColumnCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource DbSpecColumnCellStyle}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        
+        <Style x:Key="DgSpecInputColumnCenteredCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource DbSpecColumnCellStyle}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,12 +67,11 @@
                     Margin="0,0,0,8">
             <TextBlock Text="Test Name"
                        FontWeight="Bold"
-                       FontSize="16"
+                       FontSize="14"
                        VerticalAlignment="Center"/>
             <TextBox x:Name="TxtTestName"
-                     Width="250"
+                     Width="250" Padding="2 1"
                      Margin="10,0,0,0"
-                     Background="WhiteSmoke"
                      VerticalAlignment="Center"/>
         </StackPanel>
 
@@ -42,178 +79,56 @@
         <GroupBox Grid.Row="1" Grid.Column="0"
                   Header="Advanced"
                   Margin="0,0,8,8">
-            <Grid Margin="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
+            <StackPanel>
                 <!-- Test Time -->
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Test Time"
-                           VerticalAlignment="Center" />
-                <TextBox x:Name="TxtTestTime"
-                         Grid.Row="0" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="26,0,39,3"/>
-                <TextBlock Grid.Column="1"
-                           Text="min."
-                           VerticalAlignment="Center"
-                           Height="14"
-                           Margin="138,0,6,0"
-                           RenderTransformOrigin="0.5,0.5">
-                    <TextBlock.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TextBlock.RenderTransform>
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
+                    <TextBlock Width="72" Text="Test Time" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TxtTestTime" Width="120" Padding="2 1" Text="{Binding TestSettings.TestTime}"/>
+                    <TextBlock Text=" min." VerticalAlignment="Center"/>
+                </StackPanel>
 
                 <!-- Torque Unit -->
-                <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Torque Unit"
-                           Margin="0,4,0,0"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboTorqueUnit"
-                          Grid.Row="1" Grid.Column="1"
-                          Margin="26,4,6,6"
-                          SelectedIndex="0">
-                    <ComboBoxItem Content="lb-in"/>
-                    <ComboBoxItem Content="Kg-cm"/>
-                    <ComboBoxItem Content="dN-m"/>
-                    <ComboBoxItem Content="N-m"/>
-                </ComboBox>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
+                    <TextBlock Width="72" Text="Torque Unit" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="CboTorqueUnit" Width="72"
+                              SelectedIndex="{Binding TestSettings.TorqueUnit}">
+                        <ComboBoxItem Content="lb-in"/>
+                        <ComboBoxItem Content="Kg-cm"/>
+                        <ComboBoxItem Content="dN-m"/>
+                        <ComboBoxItem Content="N-m"/>
+                    </ComboBox>
+                </StackPanel>
 
                 <!-- Time Unit -->
-                <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Time Unit"
-                           Margin="0,4,0,0"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboTimeUnit"
-                          Grid.Row="2" Grid.Column="1"
-                          SelectedIndex="0"
-                          Margin="26,4,6,5">
-                    <ComboBoxItem Content="mm:ss"/>
-                    <ComboBoxItem Content="mm."/>
-                </ComboBox>
-            </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="72" Text="Time Unit" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="CboTimeUnit" Width="72"
+                              SelectedIndex="{Binding TestSettings.TimeUnit}">
+                        <ComboBoxItem Content="mm:ss"/>
+                        <ComboBoxItem Content="mm."/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
         </GroupBox>
 
         <!-- ====== RESULTS (PHẢI TRÊN) ====== -->
         <GroupBox Grid.Row="1" Grid.Column="1"
                   Header="Results"
                   Margin="0,0,0,0">
-            <Grid Margin="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="60"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Result 1 -->
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Result 1"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult1"
-                          Grid.Row="0" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,0,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult1"
-                         Grid.Row="0" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 2 -->
-                <TextBlock Grid.Row="1" Grid.Column="0"
-                           Text="Result 2"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult2"
-                          Grid.Row="1" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,120,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult2"
-                         Grid.Row="1" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 3 -->
-                <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Result 3"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult3"
-                          Grid.Row="2" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,4,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult3"
-                         Grid.Row="2" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-
-                <!-- Result 4 -->
-                <TextBlock Grid.Row="3" Grid.Column="0"
-                           Text="Result 4"
-                           VerticalAlignment="Center"/>
-                <ComboBox x:Name="CboResult4"
-                          Grid.Row="3" Grid.Column="1"
-                          SelectedIndex="0"
-                          Width="50"
-                          HorizontalAlignment="Left"
-                          Margin="8,0,0,4">
-                    <ComboBoxItem Content="ts"/>
-                    <ComboBoxItem Content="tc"/>
-                    <ComboBoxItem Content="Tc"/>
-                    <ComboBoxItem Content="T"/>
-                    <ComboBoxItem Content="t"/>
-                </ComboBox>
-                <TextBox x:Name="TxtResult4"
-                         Grid.Row="3" Grid.Column="1"
-                         Background="WhiteSmoke"
-                         Margin="70,0,0,4"
-                         Grid.ColumnSpan="2"/>
-            </Grid>
+            <ItemsControl x:Name="IcLstFeaturePoints" ItemsSource="{Binding CVResults}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 3">
+                            <TextBlock Text="{Binding Title}" Width="72" VerticalAlignment="Center"/>
+                            <ComboBox Width="72" Margin="6 0 0 0"
+                                      ItemsSource="{Binding DataContext.LstFeaturePointTypes, RelativeSource={RelativeSource AncestorType=Window}}"
+                                      SelectedItem="{Binding Type}"/>
+                            <TextBox x:Name="TxtTypeValue" Width="72" Margin="6 0 0 0" Text="{Binding TypeValue}" VerticalContentAlignment="Center"
+                                     PreviewTextInput="TxtTypeValue_PreviewTextInput"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </GroupBox>
 
         <!-- ====== TEMPERATURE + ARC (TRÁI DƯỚI) ====== -->
@@ -221,30 +136,18 @@
                     Orientation="Vertical"
                     Margin="0,0,8,8">
             <GroupBox Header="Temperature" Margin="0,0,0,8">
-                <Grid Margin="8">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
+                <StackPanel Orientation="Horizontal">
                     <!-- Test Temperature -->
-                    <TextBlock Grid.Row="0" Grid.Column="0"
-                               Text="Test Temperature"
+                    <TextBlock Text="Test Temperature"
                                VerticalAlignment="Center"/>
                     <TextBox x:Name="TxtTestTemp"
-                             Grid.Row="0" Grid.Column="1"
-                             Background="WhiteSmoke"
-                             Width="60"
-                             Margin="8,0,4,4"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2"
-                               HorizontalAlignment="Left"
-                               Text="°C"
+                             Width="60" Padding="2 1"
+                             Margin="8 0 0 0"/>
+                    <TextBlock HorizontalAlignment="Left"
+                               Text=" °C"
                                VerticalAlignment="Center"/>
-                </Grid>
+
+                </StackPanel>
             </GroupBox>
 
             <!-- ====== ARC + TAN DELTA (CÙNG 1 HÀNG) ====== -->
@@ -292,58 +195,63 @@
             </Grid.RowDefinitions>
 
             <!-- Spec table -->
-            <GroupBox Header="Spec."
-              Grid.Row="0"
-              Margin="0,0,0,8">
-                <DataGrid x:Name="DgSpec"
-          AutoGenerateColumns="False"
-          CanUserAddRows="False"
-          CanUserResizeColumns="False"
-          HeadersVisibility="Column"
+            <GroupBox Header="Spec." Grid.Row="0" Margin="0,0,0,8">
+                <StackPanel>
+                    <DataGrid x:Name="DgSpec"
+                            ItemsSource="{Binding TestSettings.FeaturePoints}"
+                                                                                        
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserResizeColumns="False"
+                            HeadersVisibility="Column"
+                            ColumnHeaderHeight="25"
+                            CanUserSortColumns="False"
 
-          RowHeight="25"
-          ColumnHeaderHeight="25"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            RequestBringIntoView="DgSpec_RequestBringIntoView"
 
-          ScrollViewer.VerticalScrollBarVisibility="Disabled"
-          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            RequestBringIntoView="DgSpec_RequestBringIntoView"
-          Height="175"
+                            HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="LightGray"                            
+                          
+                            Margin="3"
+                              
+                            PreviewTextInput="DgSpec_PreviewTextInput">
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="LightGray"/>
+                        </DataGrid.Resources>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <EventSetter Event="RequestBringIntoView"
+                                Handler="DgSpecRow_RequestBringIntoView"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
 
-                    Margin="4">
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <EventSetter Event="RequestBringIntoView"
-                         Handler="DgSpecRow_RequestBringIntoView"/>
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
+                            <DataGridTextColumn Header="Spec. Input"
+                                Width="*" CellStyle="{StaticResource DgSpecFixedColumnCellStyle}"
+                                Binding="{Binding Name}"
+                                IsReadOnly="True"/>
 
-                        <DataGridTextColumn Header="Spec. Input"
-                            Width="*"
-                            Binding="{Binding Spec}"
-                            IsReadOnly="True" />
+                            <DataGridTextColumn Header="Minimum"
+                                Width="72" CellStyle="{StaticResource DgSpecInputColumnCellStyle}"
+                                Binding="{Binding SpecMin}"/>
 
-                        <DataGridTextColumn Header="Minimum"
-                            Width="80"
-                            Binding="{Binding Min}" />
+                            <DataGridTextColumn Header="Maximum"
+                                Width="72" CellStyle="{StaticResource DgSpecInputColumnCellStyle}"
+                                Binding="{Binding SpecMax}" />
 
-                        <DataGridTextColumn Header="Maximum"
-                            Width="80"
-                            Binding="{Binding Max}" />
-
-                        <DataGridTemplateColumn Header="" Width="40">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsChecked}"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                    </DataGrid.Columns>
-
-                </DataGrid>
+                            <DataGridTemplateColumn Header="" Width="40" CellStyle="{StaticResource DgSpecInputColumnCenteredCellStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsSpecChecked}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
             </GroupBox>
 
             <!-- Torque Range -->

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DMR2020.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Rheo" Height="600" Width="900">
+        Title="Rheo" Height="600" Width="900" Background="WhiteSmoke">
     <DockPanel>
 
         <!-- THANH MENU TRÊN CÙNG -->
@@ -56,9 +56,10 @@
                       Click="QuitMenuItem_Click"/>
         </Menu>
 
-        <!-- NỘI DUNG BÊN DƯỚI -->
-        <Grid Background="#FFEEEEEE">
-        </Grid>
+        <StackPanel Margin="6">
+            <Button x:Name="BtDebugTest" Content="Debug Test" Click="BtDebugTest_Click"/>
+            <Button x:Name="BtDebugTestDb" Content="Debug Test Db" Click="BtDebugTestDb_Click"/>
+        </StackPanel>
 
     </DockPanel>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using DMR2020.Data;
+using DMR2020.Db;
 using SqlSugar;
 using System;
 using System.Collections.ObjectModel;
@@ -32,7 +33,7 @@ namespace DMR2020.View
             try
             {
                 // Dùng Db singleton của anh: Instance.Client là SqlSugarScope
-                var dbList = Db.Instance.Client.Queryable<TestSetup>()
+                var dbList = DbBridge.Instance.Client.Queryable<TestSetup>()
                                                .OrderBy(x => x.Id, OrderByType.Desc)
                                                .ToList();
 
@@ -101,7 +102,7 @@ namespace DMR2020.View
             {
                 Items.Add(new TestItem
                 {
-                    TestName = win.TestName,
+                    //TestName = win.TestName,
                     CreatedTime = DateTime.Now   // đúng kiểu DateTime
                 });
 
@@ -119,11 +120,11 @@ namespace DMR2020.View
             var win = new EditTestWindow();
             win.Title = "Edit Test Item";
             win.Owner = this;
-            win.TestName = item.TestName;   // nạp dữ liệu cũ
+            //win.TestName = item.TestName;   // nạp dữ liệu cũ
 
             if (win.ShowDialog() == true)
             {
-                item.TestName = win.TestName;   // lấy lại TestName mới
+                //item.TestName = win.TestName;   // lấy lại TestName mới
                 _view?.Refresh();
             }
         }
