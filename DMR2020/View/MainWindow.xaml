@@ -57,8 +57,8 @@
         </Menu>
 
         <StackPanel Margin="6">
-            <Button x:Name="BtDebugTest" Content="Debug Test" Click="BtDebugTest_Click"/>
-            <Button x:Name="BtDebugTestDb" Content="Debug Test Db" Click="BtDebugTestDb_Click"/>
+            <Button x:Name="BtDebugTest" Content="Debug Test"/>
+            <Button x:Name="BtDebugTestDb" Content="Debug Test Db"/>
         </StackPanel>
 
     </DockPanel>

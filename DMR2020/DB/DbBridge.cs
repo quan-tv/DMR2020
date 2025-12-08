@@ -1,8 +1,7 @@
 ﻿using DMR2020.Model;
 using SqlSugar;
-using System.Windows.Input;
 
-namespace DMR2020.Db
+namespace DMR2020.DB
 {
     /// <summary>
     /// Singleton quản lý SqlSugar cho MariaDB

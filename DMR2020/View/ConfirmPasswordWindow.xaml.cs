@@ -1,4 +1,5 @@
 ﻿using DMR2020.Data;
+using DMR2020.DB;
 using System.Windows;
 using System.Windows.Input;
 
@@ -23,7 +24,7 @@ namespace DMR2020.View
             {
                 e.Handled = true;
 
-                var list = Db.Instance.Client.Queryable<Settings>().
+                var list = DbBridge.Instance.Client.Queryable<Settings>().
                                                 Where(static x => x.ten == "password").ToList();
 
                 string password = list.First().giatri;

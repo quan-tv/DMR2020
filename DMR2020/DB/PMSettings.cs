@@ -1,11 +1,4 @@
 ﻿using DMR2020.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
 
 namespace DMR2020.DB
 {
@@ -25,7 +18,7 @@ namespace DMR2020.DB
 
         private void Load()
         {
-            var list = Db.Instance.Client.Queryable<Settings>().ToList();
+            var list = DbBridge.Instance.Client.Queryable<Settings>().ToList();
 
             SettingsDict = new Dictionary<string, Settings>();
 
@@ -46,7 +39,7 @@ namespace DMR2020.DB
         {
             foreach (var item in SettingsDict.Values)
             {
-                Db.Instance.Client.Updateable(item).ExecuteCommand();
+                DbBridge.Instance.Client.Updateable(item).ExecuteCommand();
             }
         }
     }
